@@ -32,7 +32,7 @@ class JoinQuantDraft:
 
 CRITICAL_LOG_PATTERNS = [
     r"Traceback",
-    r"\bERROR\b",
+    r"\s-\sERROR\s+-",
     r"\bException\b",
     r"错误",
     r"异常",
@@ -364,7 +364,7 @@ def extract_joinquant_auth_from_har(har_path: str) -> Dict[str, str]:
 def scan_log_text(text: str) -> Dict[str, Any]:
     hits = []
     for pat in CRITICAL_LOG_PATTERNS:
-        if re.search(pat, text, re.I):
+        if re.search(pat, text):
             hits.append(pat)
     return {"has_critical": bool(hits), "matched_patterns": hits}
 
